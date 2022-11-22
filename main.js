@@ -18,15 +18,39 @@ form.addEventListener("submit", (event) => {
     })
     .then((data) => {
       // data is whatever the prior promise retuned, in this case an ovbject conatining ht results from the fetch
-      for (let song of data.results) {
+     /* for (let song of data.results) {
       console.log(`This is what we got from the API: ${song.trackName}`);
-      }
+      
+      }*/
+      loadSongs(data.results);
     });
 });
 
 
-function loadSongs(song) {
-    for (let song of data.results){
+function loadSongs(songs) {
+    for (let song of songs){
         
+        //create card container
+        let card = document.createElement('div');
+        card.classList.add('card');
+        
+        //create image container
+        let image = document.createElement('div');
+        image.classList.add('card-image');
+
+        //link picture to image container
+        let pic = document.createElement('img');
+        pic.src = song.artworkUrl100;
+
+        //create container for song title
+        let title = document.createElement('div');
+        title.classList.add('title', 'is-4')
+        title.innerText = song.trackName;
+        
+        //append all children to card and place in results section
+        image.appendChild(pic);
+        card.appendChild(image);
+        card.appendChild(title);
+        results.appendChild(card);
     }
 }
