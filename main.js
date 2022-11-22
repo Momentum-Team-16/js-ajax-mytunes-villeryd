@@ -32,7 +32,7 @@ function loadSongs(songs) {
         
         //create card container
         let card = document.createElement('div');
-        card.classList.add('card');
+        card.classList.add('card','is-3', 'tile');
         
         //create image container
         let image = document.createElement('div');
@@ -44,7 +44,7 @@ function loadSongs(songs) {
 
         //create container for song title
         let title = document.createElement('div');
-        title.classList.add('title', 'is-4')
+        title.classList.add('title', 'is-4' )
         title.innerText = song.trackName;
         
         //append all children to card and place in results section
