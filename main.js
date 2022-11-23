@@ -39,31 +39,38 @@ function loadSongs(songs) {
    
 
     for (let song of songs){
-        let card = document.createElement('div');
-        
-        //create card container
-        
+
+
+         //create card container
+        let card = document.createElement('div');   
         card.classList.add('card','is-3', 'tile');
         
-        //create image container
-       /* let image = document.createElement('div');
-        image.classList.add('card-image');
-*/
-        //link picture to image container
+        //link picture to card
         let pic = document.createElement('img');
         pic.src = song.artworkUrl100;
+        card.appendChild(pic);
 
         //create container for song title
         let title = document.createElement('div');
         title.classList.add('title', 'is-4' )
         title.innerText = song.trackName;
-        
-        //append all children to card and place in results section
-        //image.appendChild(pic);
-        card.appendChild(pic);
         card.appendChild(title);
+
+        let artist = document.createElement('div');
+        artist.classList.add('subtitle');
+        artist.innerText = song.artistName;
+        title.appendChild(artist);
+
+        let album = document.createElement('div');
+        album.classList.add('subtitle');
+        album.innerText = song.collectionName;
+        title.appendChild(album);
+        
+        //append card to results section
         results.appendChild(card);
 
+
+        //event listener for song preview
         card.addEventListener('click', (event) => {
             let player = document.querySelector('#audio');
             player.src = song.previewUrl;
@@ -73,3 +80,9 @@ function loadSongs(songs) {
     }
 }
 
+function createCardEl(type, classArray, parent) {
+    let newElement = document.createElement(type);
+    newElement.classList.add(classArray);
+    parent.appendChild(newElement);
+    return newElement;
+}
