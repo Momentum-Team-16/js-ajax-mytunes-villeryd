@@ -5,39 +5,50 @@ const url = "https://itunes.apple.com/search?term=";
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
+    
     searchTerm = url + form.querySelector('#key').value + '/'
   console.log("submitted");
-  fetch(searchTerm, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" }
-  })
-    .then((response) => {
-      return response.json();
 
-      // this reads the json and returns a JS object
-    })
-    .then((data) => {
-      // data is whatever the prior promise retuned, in this case an ovbject conatining ht results from the fetch
-     /* for (let song of data.results) {
-      console.log(`This is what we got from the API: ${song.trackName}`);
-      
-      }*/
-      loadSongs(data.results);
-    });
+  fetcher(searchTerm);
+  
 });
 
+function fetcher(link) {
+    fetch(searchTerm, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+        .then((response) => {
+          return response.json();
+    
+          // this reads the json and returns a JS object
+        })
+        .then((data) => {
+          // data is whatever the prior promise retuned, in this case an ovbject conatining ht results from the fetch
+         /* for (let song of data.results) {
+          console.log(`This is what we got from the API: ${song.trackName}`);
+          
+          }*/
+          loadSongs(data.results);
+          
+        
+        });
+}
 
 function loadSongs(songs) {
+   
+
     for (let song of songs){
+        let card = document.createElement('div');
         
         //create card container
-        let card = document.createElement('div');
+        
         card.classList.add('card','is-3', 'tile');
         
         //create image container
-        let image = document.createElement('div');
+       /* let image = document.createElement('div');
         image.classList.add('card-image');
-
+*/
         //link picture to image container
         let pic = document.createElement('img');
         pic.src = song.artworkUrl100;
@@ -48,9 +59,17 @@ function loadSongs(songs) {
         title.innerText = song.trackName;
         
         //append all children to card and place in results section
-        image.appendChild(pic);
-        card.appendChild(image);
+        //image.appendChild(pic);
+        card.appendChild(pic);
         card.appendChild(title);
         results.appendChild(card);
+
+        card.addEventListener('click', (event) => {
+            let player = document.querySelector('#audio');
+            player.src = song.previewUrl;
+            });
+
+        
     }
 }
+
